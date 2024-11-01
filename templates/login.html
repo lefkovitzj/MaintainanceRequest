@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <title>Login</title>
+        <style>
+            html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+
+            h1{
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                    <div class="w3-panel w3-gray w3-display-container">
+                        <span onclick="this.parentElement.style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <p>{{message}}</p>
+                    </div>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <div class="w3-container">
+            <div class="w3-container w3-quarter"></div>
+            <div class="w3-container w3-half">
+                <h1 class="w3-center">Please Log into your Account</h1>
+                <form action="" method="post">
+                    <label for="username">Username:</label>
+                    <input class="w3-input w3-animate-input w3-center" style="width:50%" type="text" name="username" required />
+                    <br><br>
+                    <label for="password">Password:</label>
+                    <input class="w3-input w3-animate-input w3-center" style="width:50%" type="password" name="password" required />
+                    <br><br>
+                    <button class="w3-center w3-input" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

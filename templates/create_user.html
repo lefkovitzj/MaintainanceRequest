@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <style>
+      h1 {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Create account</a></li>
+      </ul>
+    </nav>
+    <h1>Create an account</h1>
+    <form method="post">
+      <label for="username">Username:</label>
+      {% if set_username %}
+      <input type="text" name="username" value={{set_username}} disabled/>
+      {% else %}
+      <input type="text" name="username" />
+      {% endif %}
+      <label for="cars">Choose a priviledge level:</label>
+      <select id="priviledge" name="priviledge">
+        {% for priviledge in priviledges %}
+        <option value="{{priviledge}}">{{priviledge}}</option>
+        {% endfor %}
+      </select>
+
+      <label for="email">Email:</label>
+      <input type="text" name="email" />
+      <label for="password">Password:</label>
+      <input type="password" name="password" />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

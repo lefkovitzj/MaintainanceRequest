@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Owner & Administrator Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+</head>
+<body class="w3-light-grey">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <div class="w3-container w3-row">
+        <div class="w3-bar">
+            <span>Welcome, <strong>{{current_user.username}}</strong></span><br>
+            <span class="w3-bar-item w3-left"><a href="/logout">Log Out</a></span>
+        </div>
+    </div>
+    <hr>
+    <div class="w3-container">
+        <h5>Dashboard</h5>
+    </div>
+    <div class="w3-bar-block">
+        <a href="" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+        <a href="/dashboard" class="w3-bar-item w3-button w3-padding w3-green"><i class="fa fa-dashboard fa-fw"></i>  Dashboard</a>
+        <a href="/view-tasks" class="w3-bar-item w3-button w3-padding"><i class="fa fa-tasks fa-fw"></i>  Tasks</a>
+        <a href="/view-users" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Users</a>
+        <a href="/statistics" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bar-chart fa-fw"></i>  Statistics</a>
+        <a href="/export-tasks" class="w3-bar-item w3-button w3-padding"><i class="fa fa-database fa-fw"></i>  Database</a>
+    </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;"><!-- ;margin-top:43px-->
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+    </header>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <div class="w3-panel w3-gray w3-display-container">
+                    <p>{{message}}</p>
+                    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+
+    <div class="w3-row-padding w3-margin-bottom">
+        <a href="/view-tasks"><div class="w3-third w3-border">
+            <div class="w3-container w3-green w3-padding-16">
+                <div class="w3-left"><i class="fa fa-tasks w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                    <h3>{{num_tasks}}</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Tasks</h4>
+            </div>
+        </div></a>
+        <a href="/view-users"><div class="w3-third w3-border">
+            <div class="w3-container w3-green w3-padding-16">
+                <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                    <h3>{{num_users}}</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Users</h4>
+            </div>
+        </div></a>
+        <a href="/statistics"><div class="w3-third w3-border">
+            <div class="w3-container w3-green w3-padding-16">
+                <div class="w3-left"><i class="fa fa-bar-chart w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                    <h3>&nbsp;</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Statistics</h4>
+            </div>
+        </div></a>
+    </div>
+
+    <div class="w3-panel">
+        <div class="w3-row-padding" style="margin:0 -16px">
+            <div class="w3-third">
+                <div class="w3-container w3-green w3-padding-16">
+                    <h5 class="w3-text-white"><i class="fa fa-database w3-large"></i> Database</h5>
+                    <table class="w3-table w3-striped w3-white">
+                        <tr>
+                            <td><i class="fa fa-cloud-download w3-text-green w3-large"></i></td>
+                            <td><a href="../export-tasks">Download Tasks Database.</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-cut w3-text-green w3-large"></i></td>
+                            <td><a href="../remove-cancelled">Remove Cancelled Tasks.</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-cut w3-text-green w3-large"></i></td>
+                            <td><a href="../remove-completed">Remove Completed Tasks.</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-archive w3-text-green w3-large"></i></td>
+                            <td><a href="../view-users">Inspect Users Database.</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-archive w3-text-green w3-large"></i></td>
+                            <td><a href="../view-tasks">Inspect Tasks Database.</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="w3-twothird">
+                <div class="w3-container w3-green w3-padding-16">
+                    <h5><i class="fa fa-clock-o w3-large"></i> Recent Activity</h5>
+                    <table class="w3-table w3-striped w3-white">
+                        {% for recent_action in recent_activity %}
+                        <tr>
+                            <td><i class="fa {{recent_action.fa_icon}} w3-text-green w3-large"></i></td>
+                            <td>{{recent_action.description}}</td>
+                            <td class="w3-text-green"><a href="{{recent_action.link_url}}">View Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="w3-container">
+        <h5>Recent Tasks</h5>
+        <div class="w3-row-padding">
+
+        {% for task, description in recent_tasks %}
+        <div class="w3-quarter w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+                <li class="w3-green w3-xlarge w3-padding-32">{{ task.for_user.title() }}</li>
+                <li class="w3-padding-16"><b>Location:</b> {{task.location}}</li>
+                <li class="w3-padding-16"><b>Urgency:</b> {{task.urgency}}/5</li>
+                <li class="w3-padding-16"><b>Status:</b> {{task.status}}</li>
+                <li class="w3-padding-16"><b></b> {{task.description}}</li>
+                {% if task.delegated_to != None %}
+                    <li class="w3-padding-16"><b>Assigned to</b> {{task.delegated_to.title()}}</li>
+                {% endif %}
+                <li class="w3-padding-16">
+                    <h2 class="w3-wide">{{description}}</h2>
+
+                </li>
+                <li class="w3-light-grey w3-padding-24">
+                    <a href="/view-tasks#task-{{task.id}}"><button class="w3-button w3-green w3-padding-large">View Task</button></a>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    <br>
+    <div class="w3-container w3-dark-grey w3-padding-32">
+        <div class="w3-row">
+            <div class="w3-container w3-third">
+                <h5 class="w3-bottombar w3-border-green">Pages</h5>
+                <p><a href="/logout">Log Out</a></p>
+                <p><a href="/">Dashboard</a></p>
+            </div>
+            <div class="w3-container w3-twothird">
+                <h5 class="w3-bottombar w3-border-green">About</h5>
+                <p>Developed by lefkovitzj&emsp;-&emsp;Available Under Open Source (MIT) License</p>
+                <p><a href="https://github.com/lefkovitzj/">View the Source Code!</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+</script>
+</body>
+</html>
