@@ -1,0 +1,5 @@
+# Secrets file.
+.env
+
+# Database files.
+*.sqlite
